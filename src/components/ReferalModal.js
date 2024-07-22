@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Box, Button, TextField, createTheme, ThemeProvider, Alert, Stack } from '@mui/material';
+import { Modal, Box, Button, TextField, createTheme, ThemeProvider, Alert, Stack, CircularProgress } from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -20,6 +20,7 @@ const ReferralModal = ({ open, onClose, sendReferral }) => {
     refereeName: "",
     courseName: ""
   });
+  const [loader, setLoader] = React.useState(false);
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -30,6 +31,7 @@ const ReferralModal = ({ open, onClose, sendReferral }) => {
   }
 
   const handleSubmit = async (event) => {
+    setLoader(true);
     event.preventDefault();
     const referralData = {
       yourName: state.yourName, 
@@ -39,7 +41,7 @@ const ReferralModal = ({ open, onClose, sendReferral }) => {
     };
 
     const result = await sendReferral(referralData);
-
+    setLoader(false);
     if (result.success) {
       setAlerts([{ severity: 'success', message: 'Referral created successfully!' }]);
       // Optionally clear form fields
@@ -74,8 +76,27 @@ const ReferralModal = ({ open, onClose, sendReferral }) => {
             borderRadius: '10px',
             boxShadow: 24,
             p: 4,
+            position: 'relative',
           }}
         >
+          {loader && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                bgcolor: 'rgba(255, 255, 255, 0.8)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1,
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          )}
           <h2 id="referral-modal-title">Refer a Course</h2>
           <form onSubmit={handleSubmit}>
             <TextField
