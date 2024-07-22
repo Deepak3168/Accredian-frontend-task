@@ -29,7 +29,6 @@ const ReferralModal = ({ open, onClose, sendReferral }) => {
       [name]: value
     }));
   }
-
   const handleSubmit = async (event) => {
     setLoader(true);
     event.preventDefault();
@@ -39,12 +38,14 @@ const ReferralModal = ({ open, onClose, sendReferral }) => {
       refereeEmail: state.refereeEmail, 
       courseName: state.courseName, 
     };
-
+    
     const result = await sendReferral(referralData);
     setLoader(false);
+    
     if (result.success) {
       setAlerts([{ severity: 'success', message: 'Referral created successfully!' }]);
-      // Optionally clear form fields
+      
+      
       setState({
         yourName: "",
         refereeEmail: "",
@@ -54,7 +55,12 @@ const ReferralModal = ({ open, onClose, sendReferral }) => {
     } else {
       setAlerts([{ severity: 'error', message: `Errors: ${result.errors}` }]);
     }
+    
+    setTimeout(() => {
+      setAlerts([]);
+    }, 5000);
   };
+  
 
   return (
     <ThemeProvider theme={theme}>
