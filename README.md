@@ -82,4 +82,4 @@ Contributions to this project are welcome! Please follow the standard Git workfl
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Deployed Version : https://accredian-frontend-task-bjegkxuhp-deepak3168s-projects.vercel.app/
+Deployed Version : https://accredian-frontend-task-ten-rho.vercel.app/
